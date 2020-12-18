@@ -66,78 +66,14 @@ namespace DoAn_2.MenuTab
 
         private void textBoxSearch_TextChanged(object sender, EventArgs e)
         {
-            try
-            {
-                if (connect.State != ConnectionState.Open)
-                    connect.Open();
-                using (SqlDataAdapter da = new SqlDataAdapter("select * from HoaDon where ( IDhoadon like '" + textBoxSearch.Text + "%' or HDthanhtoan like N'" + textBoxSearch.Text + "%' or SDT like '" + textBoxSearch.Text + "%' or TenKH like '" + textBoxSearch.Text + "%' or HDtime like '" + textBoxSearch.Text + "%'       )", connect))
-                {
-                    DataTable dtsearch = new DataTable("HoaDon");
-                    da.Fill(dtsearch);
-                    dgvDonHang.DataSource = dtsearch;
-
-                }
-                connect.Close();
-                if (dgvDonHang.Rows.Count > 0 && dgvDonHang.Rows != null)
-                {
-                     labelSearch.Text = "Đã tìm thấy";
-                }
-                else
-                {
-                     labelSearch.Text = "Không tìm thấy...";
-                }
-
-                if (string.IsNullOrWhiteSpace(textBoxSearch.Text))
-                {
-                    labelSearch.Text = "Tìm kiếm theo: ID hóa đơn, Tổng tiền thanh toán, " +
-                        "SĐT khách hàng, Tên khách hàng.";
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                connect.Close();
-                MessageBox.Show(ex.Message);
-            }
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
-            string getdate = dateTimePicker1.Value.Date.ToString("MM/dd/yyyy");
-            try
-            {
-                if (connect.State != ConnectionState.Open)
-                    connect.Open();
-                using (SqlDataAdapter da = new SqlDataAdapter("select * from HoaDon where cast ([HDtime] as date) = '" + getdate + "'      ", connect))
-                {
-                    DataTable dtsearch = new DataTable("HoaDon");
-                    da.Fill(dtsearch);
-                    dgvDonHang.DataSource = dtsearch;
-
-                }
-                connect.Close();
-                if (dgvDonHang.Rows.Count > 1 && dgvDonHang.Rows != null)
-                {
-                   // labelSearch.Text = "Đã tìm thấy";
-                }
-                else
-                {
-                  //  labelSearch.Text = "Không tìm thấy...";
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                connect.Close();
-                MessageBox.Show(ex.Message);
-            }
         }
 
         private void ButtonReloadTable_Click(object sender, EventArgs e)
         {
-            gridviewsp();
         }
 
         private void btnExportExcel_Click(object sender, EventArgs e)

@@ -308,7 +308,7 @@ namespace DoAn_2.MenuTab
 					Combo combo = comboDAO.getByID(idsanpham);
 					if (combo != null)
 					{
-						txtdongiasp.Text = p.Price.ToString();
+						txtdongiasp.Text = combo.totalMoney.ToString();
 						tensanpham.Text = combo.Combo_Name;
 					}
 					else
@@ -845,15 +845,6 @@ namespace DoAn_2.MenuTab
 
 		private void btnscansp_Click(object sender, EventArgs e)
 		{
-
-		}
-		public List<Product> getProductInCombo(int macmbo)
-        {
-			String idsp = _context.Combo.Where(m => m.ID == macmbo).FirstOrDefault().Product_List;
-			if(idsp != null)
-            {
-				String [] ids =idsp.
-            }
 
 		}
 	}
