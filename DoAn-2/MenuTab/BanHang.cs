@@ -3,13 +3,19 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using DoAn_2.DAL;
+using DoAn_2.Model;
+using System.Collections.Generic;
 
 namespace DoAn_2.MenuTab
 {
 	public partial class BanHang : Form
 	{
 		SqlConnection connect = ClassKetnoi.connect;
-		// SqlConnection connect = new SqlConnection(@"Data Source=DESKTOP-A0E9NLI\MSSQLSERVER2019;Initial Catalog=doan-3;Integrated Security=True");
+		CustomerDAO customerDAO = new CustomerDAO();
+		ProductDAO productDAO = new ProductDAO();
+		ComboDAO comboDAO = new ComboDAO();
+		Project_BanHang1Entities1 _context = new Project_BanHang1Entities1();
 
 		public static string thanhtoan = "";//nut Tính tiền chuyển tạm thời cho form TT
 		public static string IDhoadon = "";
@@ -18,7 +24,6 @@ namespace DoAn_2.MenuTab
 		public static string HDdongia = "";
 		public static string HDsl = "";
 		public static string HDloai = "";
-	  //  public static string HDthanhtoan = "";
 		public static string HDdonvi = "";
 		public static string SDT = "";
 		public static string TenKH = "";
@@ -28,10 +33,21 @@ namespace DoAn_2.MenuTab
 		public BanHang()
 		{
 			InitializeComponent();
+			loadKhachHang();
+
 			showAllProduct();
 			//test
 		}
+		public void loadKhachHang()
+        {
+			List<Customer> cystomers= customerDAO.getAll();
+			cystomers.ForEach(m =>
+			{
+				cbc_employee.Items.Add(m.firstName+"_"+m.ID);
+			});
+			
 
+		}
 		private void showAllProduct()
 		{
 			//String[] datas = { "", "", "", "", "" };
@@ -264,7 +280,48 @@ namespace DoAn_2.MenuTab
 
 		private void btnhuy_Click(object sender, EventArgs e)
 		{
-			clearsp();
+			try
+			{
+				bool checkbox_combo = chb_combo.Checked;
+			int idsanpham = Convert.ToInt32(txtmasp.Text);
+			if (checkbox_combo != true)
+            {
+					//tim trong bang product
+					Product p = productDAO.getByID(idsanpham);
+					if(p != null)
+                    {
+						txtdongiasp.Text = p.Price.ToString();
+						tensanpham.Text = p.Product_Name;
+					}
+                    else
+                    {
+						MessageBox.Show("Không tìm thấy!");
+					}
+
+
+
+
+			}
+            else
+            {
+					//timf trong bang combo
+					Combo combo = comboDAO.getByID(idsanpham);
+					if (combo != null)
+					{
+						txtdongiasp.Text = p.Price.ToString();
+						tensanpham.Text = combo.Combo_Name;
+					}
+					else
+					{
+						MessageBox.Show("Không tìm thấy!");
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Không tìm thấy!");
+			}
+
 		}
 
 		private void txttongcongtiensp_TextChanged(object sender, EventArgs e)
@@ -788,6 +845,15 @@ namespace DoAn_2.MenuTab
 
 		private void btnscansp_Click(object sender, EventArgs e)
 		{
+
+		}
+		public List<Product> getProductInCombo(int macmbo)
+        {
+			String idsp = _context.Combo.Where(m => m.ID == macmbo).FirstOrDefault().Product_List;
+			if(idsp != null)
+            {
+				String [] ids =idsp.
+            }
 
 		}
 	}

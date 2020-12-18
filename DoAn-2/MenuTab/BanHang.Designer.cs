@@ -53,8 +53,12 @@
             this.btnsua = new FontAwesome.Sharp.IconButton();
             this.btnthem = new FontAwesome.Sharp.IconButton();
             this.btnxoa = new FontAwesome.Sharp.IconButton();
-            this.btnhuy = new FontAwesome.Sharp.IconButton();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.btntim = new FontAwesome.Sharp.IconButton();
+            this.cbc_employee = new System.Windows.Forms.ComboBox();
+            this.chb_combo = new System.Windows.Forms.CheckBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tensanpham = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -133,7 +137,7 @@
             // 
             // txtdongiasp
             // 
-            this.txtdongiasp.Location = new System.Drawing.Point(638, 143);
+            this.txtdongiasp.Location = new System.Drawing.Point(638, 181);
             this.txtdongiasp.Name = "txtdongiasp";
             this.txtdongiasp.ReadOnly = true;
             this.txtdongiasp.Size = new System.Drawing.Size(133, 20);
@@ -142,7 +146,7 @@
             // 
             // txttiensp
             // 
-            this.txttiensp.Location = new System.Drawing.Point(638, 183);
+            this.txttiensp.Location = new System.Drawing.Point(638, 218);
             this.txttiensp.Name = "txttiensp";
             this.txttiensp.ReadOnly = true;
             this.txttiensp.Size = new System.Drawing.Size(133, 20);
@@ -193,7 +197,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(542, 147);
+            this.label11.Location = new System.Drawing.Point(543, 185);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(54, 16);
             this.label11.TabIndex = 37;
@@ -203,7 +207,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(541, 184);
+            this.label13.Location = new System.Drawing.Point(541, 222);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(70, 16);
             this.label13.TabIndex = 39;
@@ -213,7 +217,7 @@
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(777, 187);
+            this.label15.Location = new System.Drawing.Point(777, 222);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(36, 16);
             this.label15.TabIndex = 43;
@@ -264,9 +268,9 @@
             this.btnthanhtoan.IconColor = System.Drawing.Color.Black;
             this.btnthanhtoan.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnthanhtoan.IconSize = 16;
-            this.btnthanhtoan.Location = new System.Drawing.Point(546, 316);
+            this.btnthanhtoan.Location = new System.Drawing.Point(546, 353);
             this.btnthanhtoan.Name = "btnthanhtoan";
-            this.btnthanhtoan.Size = new System.Drawing.Size(326, 77);
+            this.btnthanhtoan.Size = new System.Drawing.Size(332, 77);
             this.btnthanhtoan.TabIndex = 24;
             this.btnthanhtoan.Text = "Thanh toán";
             this.btnthanhtoan.UseVisualStyleBackColor = true;
@@ -278,7 +282,7 @@
             this.btnsua.IconColor = System.Drawing.Color.Black;
             this.btnsua.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnsua.IconSize = 16;
-            this.btnsua.Location = new System.Drawing.Point(629, 245);
+            this.btnsua.Location = new System.Drawing.Point(629, 292);
             this.btnsua.Name = "btnsua";
             this.btnsua.Size = new System.Drawing.Size(77, 55);
             this.btnsua.TabIndex = 23;
@@ -292,7 +296,7 @@
             this.btnthem.IconColor = System.Drawing.Color.Black;
             this.btnthem.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnthem.IconSize = 20;
-            this.btnthem.Location = new System.Drawing.Point(546, 245);
+            this.btnthem.Location = new System.Drawing.Point(546, 292);
             this.btnthem.Name = "btnthem";
             this.btnthem.Size = new System.Drawing.Size(77, 55);
             this.btnthem.TabIndex = 22;
@@ -306,7 +310,7 @@
             this.btnxoa.IconColor = System.Drawing.Color.Black;
             this.btnxoa.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnxoa.IconSize = 16;
-            this.btnxoa.Location = new System.Drawing.Point(712, 245);
+            this.btnxoa.Location = new System.Drawing.Point(712, 292);
             this.btnxoa.Name = "btnxoa";
             this.btnxoa.Size = new System.Drawing.Size(77, 55);
             this.btnxoa.TabIndex = 21;
@@ -314,34 +318,76 @@
             this.btnxoa.UseVisualStyleBackColor = true;
             this.btnxoa.Click += new System.EventHandler(this.btnxoa_Click);
             // 
-            // btnhuy
+            // btntim
             // 
-            this.btnhuy.IconChar = FontAwesome.Sharp.IconChar.None;
-            this.btnhuy.IconColor = System.Drawing.Color.Black;
-            this.btnhuy.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnhuy.IconSize = 16;
-            this.btnhuy.Location = new System.Drawing.Point(780, 67);
-            this.btnhuy.Name = "btnhuy";
-            this.btnhuy.Size = new System.Drawing.Size(77, 20);
-            this.btnhuy.TabIndex = 20;
-            this.btnhuy.Text = "Tìm";
-            this.btnhuy.UseVisualStyleBackColor = true;
-            this.btnhuy.Click += new System.EventHandler(this.btnhuy_Click);
+            this.btntim.IconChar = FontAwesome.Sharp.IconChar.None;
+            this.btntim.IconColor = System.Drawing.Color.Black;
+            this.btntim.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btntim.IconSize = 16;
+            this.btntim.Location = new System.Drawing.Point(835, 67);
+            this.btntim.Name = "btntim";
+            this.btntim.Size = new System.Drawing.Size(77, 20);
+            this.btntim.TabIndex = 20;
+            this.btntim.Text = "Tìm";
+            this.btntim.UseVisualStyleBackColor = true;
+            this.btntim.Click += new System.EventHandler(this.btnhuy_Click);
             // 
-            // comboBox1
+            // cbc_employee
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(96, 27);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(169, 21);
-            this.comboBox1.TabIndex = 45;
+            this.cbc_employee.FormattingEnabled = true;
+            this.cbc_employee.Location = new System.Drawing.Point(96, 27);
+            this.cbc_employee.Name = "cbc_employee";
+            this.cbc_employee.Size = new System.Drawing.Size(169, 21);
+            this.cbc_employee.TabIndex = 45;
+            // 
+            // chb_combo
+            // 
+            this.chb_combo.AutoSize = true;
+            this.chb_combo.Location = new System.Drawing.Point(777, 70);
+            this.chb_combo.Name = "chb_combo";
+            this.chb_combo.Size = new System.Drawing.Size(59, 17);
+            this.chb_combo.TabIndex = 46;
+            this.chb_combo.Text = "Combo";
+            this.chb_combo.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(777, 185);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(36, 16);
+            this.label3.TabIndex = 48;
+            this.label3.Text = "VNĐ";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(542, 145);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 16);
+            this.label4.TabIndex = 49;
+            this.label4.Text = "Tên ";
+            // 
+            // tensanpham
+            // 
+            this.tensanpham.Location = new System.Drawing.Point(638, 141);
+            this.tensanpham.Name = "tensanpham";
+            this.tensanpham.ReadOnly = true;
+            this.tensanpham.Size = new System.Drawing.Size(133, 20);
+            this.tensanpham.TabIndex = 50;
             // 
             // BanHang
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(889, 491);
-            this.Controls.Add(this.comboBox1);
+            this.ClientSize = new System.Drawing.Size(924, 491);
+            this.Controls.Add(this.tensanpham);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.chb_combo);
+            this.Controls.Add(this.cbc_employee);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label13);
@@ -356,7 +402,7 @@
             this.Controls.Add(this.btnsua);
             this.Controls.Add(this.btnthem);
             this.Controls.Add(this.btnxoa);
-            this.Controls.Add(this.btnhuy);
+            this.Controls.Add(this.btntim);
             this.Controls.Add(this.txttiensp);
             this.Controls.Add(this.txtdongiasp);
             this.Controls.Add(this.txtsoluongsp);
@@ -378,7 +424,7 @@
         private System.Windows.Forms.TextBox txtsoluongsp;
         private System.Windows.Forms.TextBox txtdongiasp;
         private System.Windows.Forms.TextBox txttiensp;
-        private FontAwesome.Sharp.IconButton btnhuy;
+        private FontAwesome.Sharp.IconButton btntim;
         private FontAwesome.Sharp.IconButton btnxoa;
         private FontAwesome.Sharp.IconButton btnthem;
         private FontAwesome.Sharp.IconButton btnsua;
@@ -399,6 +445,10 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn loaisp;
 		private System.Windows.Forms.DataGridViewTextBoxColumn soluongsp;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dongiasp;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cbc_employee;
+        private System.Windows.Forms.CheckBox chb_combo;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox tensanpham;
     }
 }

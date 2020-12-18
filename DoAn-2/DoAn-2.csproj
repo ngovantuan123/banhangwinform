@@ -160,6 +160,7 @@
     <Compile Include="ClassKetnoi.cs" />
     <Compile Include="DAL\CatalogDAO.cs" />
     <Compile Include="DAL\ComboDAO.cs" />
+    <Compile Include="DAL\CustomerDAO.cs" />
     <Compile Include="DAL\EmployeeDAO.cs" />
     <Compile Include="DAL\ProductDAO.cs" />
     <Compile Include="LoginForm.cs">
