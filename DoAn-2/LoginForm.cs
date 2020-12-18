@@ -2,22 +2,23 @@
 using System.Data;
 using System.Windows.Forms;
 using System.Data.SqlClient;
-
+using System.Security.Cryptography;
+using System.Text;
+using DoAn_2.Model;
+using System.Collections.Generic;
+using DoAn_2.DAL;
 
 namespace DoAn_2
 {
 	public partial class LoginForm : Form
 	{
+		Project_BanHang1Entities1 _context = new Project_BanHang1Entities1();
+		EmployeeDAO employeeDAO = new EmployeeDAO();
 		public static string usernv = "";
-		SqlConnection connect = ClassKetnoi.connect;
-		// SqlConnection connect = new SqlConnection(@"Data Source=DESKTOP-A0E9NLI\MSSQLSERVER2019;Initial Catalog=doan-3;Integrated Security=True");
 		public LoginForm()
 		{   
 			InitializeComponent();
-			// txtuser.SelectionStart = 0;
-
-			// DEBUG TODO REMOVE
-			//btnlogin_Click(null, null);
+			
 		}
 
 		private void Form1_Load(object sender, EventArgs e)
@@ -68,22 +69,39 @@ namespace DoAn_2
 
 		private void btnlogin_Click(object sender, EventArgs e)
 		{
-			usernv = txtuser.Text;
-			// TODO
-			//string querynv = "select * From dbo.Employee where username='"+txtuser.Text+"' and password='"+txtpass.Text+"'";
-			//SqlDataAdapter sqldata = new SqlDataAdapter(querynv, connect);
-			//DataTable datatb1 = new DataTable();
-			//sqldata.Fill(datatb1);
-			//if(datatb1.Rows.Count==1)
-			{
+			String username = txtuser.Text;
+			String pass= MD5Hash(txtpass.Text);
+			
+			if(employeeDAO.checkLogin(username,pass) == true)
+            {
+				LoginForm.usernv = username;
 				MainControl mainmenu = new MainControl();
 				this.Hide();
 				mainmenu.Show();
 			}
-			//else
-			//{
-			//	MessageBox.Show("Sai tài khoản hoặc mật khẩu!");
-			//}
+            else
+            {
+				MessageBox.Show("Sai tài khoản hoặc mật khẩu!");
+			}			
+				
 		}
+		public String MD5Hash(String text)
+        {
+			MD5 md5 = new MD5CryptoServiceProvider();
+
+			//compute hash from the bytes of text  
+			md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(txtpass.Text));
+
+			byte[] result = md5.Hash;
+
+			StringBuilder strBuilder = new StringBuilder();
+			for (int i = 0; i < result.Length; i++)
+			{
+				strBuilder.Append(result[i].ToString("x2"));
+			}
+
+			return strBuilder.ToString();
+		}
+
 	}
 }

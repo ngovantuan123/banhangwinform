@@ -21,6 +21,21 @@ namespace DoAn_2.DAL
 		{
 			return _context.Catalog.Where(i => i.ID == id).FirstOrDefault();
 		}
+		public void save(Catalog catalog)
+        {
+			catalog.ID = _context.Catalog.Count()+1;
+			_context.Catalog.Add(catalog);
+			_context.SaveChanges();
+        }
+		public void update(Catalog catalog)
+		{
+			List<Catalog> list_c = _context.Catalog.Where(m => catalog.ID == m.ID).ToList();
+            foreach (Catalog ca in list_c)
+            {
+				ca.Catalog_Name = catalog.Catalog_Name;
+            }
+			_context.SaveChanges();
+		}
 	}
 }
 

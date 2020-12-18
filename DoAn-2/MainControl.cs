@@ -267,15 +267,7 @@ namespace DoAn_2
 
 		private void iconButtonSP_Click(object sender, EventArgs e)
 		{
-			//activebtn(sender, RGBColors.color3);
-			if(PanelDropDownSP.Height == 200)
-			{
-				PanelDropDownSP.Height = 50;
-			}
-			else
-			{
-				PanelDropDownSP.Height = 200;
-			}
+			motrangcon(new sanpham());
 		}
 
 		private void iconButtonSPLoai_Click(object sender, EventArgs e)
@@ -303,5 +295,10 @@ namespace DoAn_2
 			DateTime datetime = DateTime.Now;
 			this.lbDateTime.Text = datetime.ToString("dd/MM/yyyy HH:mm:ss");
 		}
-	}
+
+        private void btntheloai_Click(object sender, EventArgs e)
+        {
+			motrangcon(new LoaiSP());
+        }
+    }
 }

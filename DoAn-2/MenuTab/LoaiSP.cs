@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DoAn_2.DAL;
+using DoAn_2.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,12 +15,12 @@ namespace DoAn_2.MenuTab
 {
 	public partial class LoaiSP : Form
 	{
+		CatalogDAO catalogDAO = new CatalogDAO();
 		SqlConnection connect = ClassKetnoi.connect;
-		//SqlConnection connect = new SqlConnection(@"Data Source=DESKTOP-A0E9NLI\MSSQLSERVER2019;Initial Catalog=doan-3;Integrated Security=True");
-
 		public LoaiSP()
 		{
 			InitializeComponent();
+			loadtable();
 
 		}
 		private void autoidSPLoai()
@@ -37,13 +39,22 @@ namespace DoAn_2.MenuTab
 		}
 		private void gridviewsploai()
 		{
-			// todo connect.Open();
-			// todo string querysploai = @"select IDloai as 'Mã loại', TenLoai as 'Tên loại' from loaisp";
-			// todo SqlDataAdapter sqldatasp = new SqlDataAdapter(querysploai, connect);
-			// todo DataTable datatbsploai = new DataTable();
-			// todo sqldatasp.Fill(datatbsploai);
-			// todo dataGridViewLoaiSPloai.DataSource = datatbsploai;
-			// todo connect.Close();
+
+			
+		}
+		private void loadtable()
+        {
+			while (dataGridViewLoaiSPloai.Rows.Count > 0)
+			{
+				dataGridViewLoaiSPloai.Rows.RemoveAt(0);
+			}
+			List<Catalog> list = catalogDAO.getAll();
+			String[] datas = { "", "" };
+			list.ForEach(m => {
+				datas[0] = m.ID.ToString();
+				datas[1] = m.Catalog_Name;
+				dataGridViewLoaiSPloai.Rows.Add(datas);
+			});
 		}
 		private void iconButton4_Click(object sender, EventArgs e)
 		{
@@ -64,121 +75,59 @@ namespace DoAn_2.MenuTab
 
 		private void btnSua_Click(object sender, EventArgs e)
 		{
-			if (string.IsNullOrWhiteSpace(textBoxID.Text))
+			if (textBoxTenLoai.Text.Equals(""))
 			{
-				MessageBox.Show("Thông tin trống!");
+				MessageBox.Show("Tên thể loại trống!");
 			}
 			else
 			{
 				try
 				{
-					connect.Open();
-					using (var cmd = new SqlCommand("update loaisp set TenLoai=@TenLoai where IDloai=@IDloai"))
-					{
-						cmd.Connection = connect;
-						cmd.Parameters.AddWithValue("@IDloai", textBoxID.Text);
-						cmd.Parameters.AddWithValue("@TenLoai", textBoxTenLoai.Text);
-						connect.Open();
-						if (cmd.ExecuteNonQuery() > 0)
-						{
-							MessageBox.Show("Đã lựu");
-							connect.Close();
-							gridviewsploai();
-						}
-						else
-						{
-							MessageBox.Show("Lưu không thành công!");
-							connect.Close();
-						}
-						connect.Close();
-					}
+					Catalog ca = new Catalog();
+					ca.ID = Convert.ToInt32(textBoxID.Text);
+					ca.Catalog_Name = textBoxTenLoai.Text;
+					catalogDAO.update(ca);
+					clear();
+					loadtable();
+					MessageBox.Show("Sửa thành công");
 				}
 				catch (Exception ex)
 				{
 					connect.Close();
-					MessageBox.Show("Error during update: " + ex.Message);
+					MessageBox.Show("lỗi khi sửa: " + ex.Message);
 				}
 			}
-			clear();
-			autoidSPLoai();
-		}
-
-		private void btnXoa_Click(object sender, EventArgs e)
-		{
-			if (string.IsNullOrWhiteSpace(textBoxID.Text))
-			{
-				MessageBox.Show("Thông tin trống!");
-			}
-			else
-			{
-
-
-				try
-				{
-					using (var cmd = new SqlCommand("delete loaisp where IDloai=@IDloai"))
-					{
-						cmd.Connection = connect;
-						cmd.Parameters.AddWithValue("@IDloai", textBoxID.Text);
-						connect.Open();
-						if (cmd.ExecuteNonQuery() > 0)
-						{
-							MessageBox.Show("Đã xóa");
-							connect.Close();
-							clear();
-							gridviewsploai();
-							
-						}
-						else
-						{
-							MessageBox.Show("Lưu không thành công!");
-						}
-						connect.Close();
-					}
-				}
-				catch (Exception ex)
-				{
-					connect.Close();
-					MessageBox.Show("Error during delete: " + ex.Message);
-				}
-
-			}
-			clear();
-			autoidSPLoai(); 
+			
 		}
 
 		private void btnThem_Click(object sender, EventArgs e)
 		{
-			if (string.IsNullOrWhiteSpace(textBoxID.Text))
+			if (!textBoxID.Text.Equals(""))
 			{
-				MessageBox.Show("Trống mã loại!");
-				textBoxID.Select();
+				MessageBox.Show("Thể loại đã tồn tại!");
+
+			}
+			else if (textBoxTenLoai.Text.Equals(""))
+            {
+				MessageBox.Show("Tên thể loại trống!");
+
 			}
 			else
 			{
-				using (var cmd = new SqlCommand("INSERT INTO loaisp (IDloai,TenLoai) VALUES (@IDloai,@TenLoai)"))
-				{
-					cmd.Connection = connect;
-					cmd.Parameters.AddWithValue("@IDloai", textBoxID.Text);
-					cmd.Parameters.AddWithValue("@TenLoai", textBoxTenLoai.Text);
-
-					connect.Open();
-					if (cmd.ExecuteNonQuery() > 0)
-					{
-						MessageBox.Show("Đã thêm");
-						connect.Close();
-						clear();
-						gridviewsploai();
-					}
-					else
-					{
-						MessageBox.Show("Thêm không thành công!");
-						connect.Close();
-					}
-					connect.Close();
-
+                try
+                {
+					Catalog c = new Catalog();
+					c.Catalog_Name = textBoxTenLoai.Text;
+					catalogDAO.save(c);
+					clear();
+					loadtable();
+					MessageBox.Show("Thêm thành công!");
+				}	
+				catch(Exception ex)
+                {
+					MessageBox.Show("Thêm thất bại :"+ex.Message);
 				}
 			}
-			autoidSPLoai();
 		}
 
 
@@ -187,5 +136,10 @@ namespace DoAn_2.MenuTab
 			autoidSPLoai();
 			gridviewsploai();
 		}
-	}
+
+        private void btnclear_Click(object sender, EventArgs e)
+        {
+			clear();
+        }
+    }
 }

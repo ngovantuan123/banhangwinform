@@ -65,17 +65,13 @@ namespace DoAn_2.MenuTab
 		public void clearsp()
 		{
 			txtmasp.Clear();
-			txttensp.Clear();
 			txtsoluongsp.Clear();
 			txtdongiasp.Clear();
 			txttiensp.Clear();
 		}
 		public void huyhd()
 		{
-			txtmakh.Clear();
-			txttenkh.Clear();
 			txtmasp.Clear();
-			txttensp.Clear();
 			txtsoluongsp.Clear();
 			txtdongiasp.Clear();
 			txttiensp.Clear();
@@ -176,7 +172,7 @@ namespace DoAn_2.MenuTab
 
 			DataGridViewRow newDataRow = dataGridView1.Rows[indexRow];
 			newDataRow.Cells[0].Value = txtmasp.Text;
-			newDataRow.Cells[1].Value = txttensp.Text;
+			//newDataRow.Cells[1].Value = txttensp.Text;
 			newDataRow.Cells[2].Value = txtsoluongsp.Text;
 			newDataRow.Cells[3].Value = txtdongiasp.Text;
 			newDataRow.Cells[4].Value = txttiensp.Text;
@@ -214,7 +210,7 @@ namespace DoAn_2.MenuTab
 			   
 
 				txtmasp.Text = dataGridView1.CurrentRow.Cells[0].Value.ToString();
-				txttensp.Text = dataGridView1.CurrentRow.Cells[1].Value.ToString();
+				//txttensp.Text = dataGridView1.CurrentRow.Cells[1].Value.ToString();
 				txtsoluongsp.Text = dataGridView1.CurrentRow.Cells[2].Value.ToString();
 				txtdongiasp.Text = dataGridView1.CurrentRow.Cells[3].Value.ToString();
 			   
@@ -541,25 +537,25 @@ namespace DoAn_2.MenuTab
 		{
 			try
 			{
-				if (string.IsNullOrWhiteSpace(txtmakh.Text))
+				/*if ()
 				{
-					txttenkh.Clear();
+					//txttenkh.Clear();
 				}
 				else
-				{
+				{*/
 					connect.Open();
-					string sqlkh = "select * from KhachHang where SDT=" + int.Parse(txtmakh.Text);
-					SqlCommand cmd = new SqlCommand(sqlkh, connect);
-					SqlDataReader dr = cmd.ExecuteReader();
-					if (dr.Read())
-					{
-						txttenkh.Text = (dr["TenKH"].ToString());
+					//string sqlkh = "select * from KhachHang where SDT=" + int.Parse(txtmakh.Text);
+					//SqlCommand cmd = new SqlCommand(sqlkh, connect);
+					//SqlDataReader dr = cmd.ExecuteReader();
+					//if (dr.Read())
+					//{
+						//txttenkh.Text = (dr["TenKH"].ToString());
 						//luu tru cho form TT
-						TenKH = txttenkh.Text;
-						SDT = txtmakh.Text;
-					}
-					connect.Close();
-				}
+						//TenKH = txttenkh.Text;
+						//SDT = txtmakh.Text;
+					//}
+					//connect.Close();
+				//}
 			}
 			catch (Exception ex)
 			{
