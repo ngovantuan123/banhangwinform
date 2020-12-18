@@ -140,7 +140,8 @@ namespace DoAn_2
 		private void btnluong_Click(object sender, EventArgs e)
 		{
 			activebtn(sender, RGBColors.color3);
-			motrangcon(new tonkho());
+			motrangcon(new combo());
+			//MessageBox.Show("this function not available");
 		}
 
 		private void btnlogout_Click(object sender, EventArgs e)

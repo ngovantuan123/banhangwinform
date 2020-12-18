@@ -15,62 +15,49 @@ namespace DoAn_2.MenuTab
 		CatalogDAO ctlDao = new CatalogDAO();
 		ProductDAO PrdDao = new ProductDAO();
 
-		public void clearsp()
+		private int prdId;
+
+		// mt code
+		private void updateTable()
 		{
-			txttensp.Clear();
-			txtsl.Clear();
-			txtgiaban.Clear();
-			comboloai.SelectedItem = null;
-		   // pictureBox1.Image = null;
-			pictureBox1.Image = Properties.Resources._default;
+			// Clear
+			while (dgvlstProduct.Rows.Count > 0)
+			{
+				dgvlstProduct.Rows.RemoveAt(0);
+			}
+
+			List<Product> lstProduct = PrdDao.getAll();
+
+			String[] datas = { "", "", "", "", "" };
+			lstProduct.ForEach(p => {
+				Catalog c = ctlDao.getByID(Convert.ToInt32(p.Catalog_ID));
+
+				datas[0] = p.ID.ToString(); // id
+				datas[1] = p.Product_Name; // ten
+				datas[2] = c.ID.ToString() + "_" + c.Catalog_Name; // loai
+				datas[3] = p.Amount.ToString(); // soluong
+				datas[4] = p.Price.ToString(); // gia
+
+				dgvlstProduct.Rows.Add(datas);
+
+			});
 		}
 
+		private void updateCombobox()
+		{
+			List<Catalog> lstCatalog = ctlDao.getAll();
+
+			lstCatalog.ForEach(c => {
+				comboloai.Items.Add(c.ID.ToString() + "_" + c.Catalog_Name);
+			});
+		}
+
+		// init
 		public sanpham()
 		{
 			InitializeComponent();
 			updateTable();
 			updateCombobox();
-
-			// todo dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-			// todo gridviewsp();
-			// todo 
-			/// todo / string querysp = @"select masp as 'Mã sản phẩm', tensp as 'Tên sản phẩm', soluongsp as 'Số lượng', gianhapsp as 'Giá nhập', giabansp as 'Giá bán', loaisp as 'Loại', donvisp as 'Đơn vị'from sanpham;";
-			// todo string queryloai = @"select * from loaisp";
-			// todo string querydonvi = @"select * from donvisp";
-			// todo 
-			/// todo / SqlDataAdapter sqldatasp = new SqlDataAdapter(querysp, connect);
-			// todo SqlDataAdapter sqldataloai = new SqlDataAdapter(queryloai, connect);
-			// todo SqlDataAdapter sqldatadonvi = new SqlDataAdapter(querydonvi, connect);
-			// todo 
-			/// todo / DataTable datatbsp = new DataTable();
-			// todo DataTable datatbloai = new DataTable();
-			// todo DataTable datatbdonvi = new DataTable();
-			// todo 
-			/// todo / sqldatasp.Fill(datatbsp);
-			// todo sqldataloai.Fill(datatbloai);
-			// todo sqldatadonvi.Fill(datatbdonvi);
-			// todo 
-			// todo //combobox
-			// todo comboloai.Items.Clear();
-			// todo combodonvi.Items.Clear();
-			// todo foreach (DataRow dr in datatbloai.Rows)
-			// todo {
-			// todo     comboloai.Items.Add(dr["TenLoai"].ToString());
-			// todo }
-			// todo foreach (DataRow dr2 in datatbdonvi.Rows)
-			// todo {
-			// todo     combodonvi.Items.Add(dr2["TenDonvi"].ToString());
-			// todo }
-			// todo connect.Close();
-			// todo //table
-			// dataGridView1.DataSource = datatbsp;
-		}
-
-		private void sanpham_Load(object sender, EventArgs e)
-		{
-			//txtKhuyenmai.Text = "0";
-			//txtid.ReadOnly = true;
-
 		}
 
 		private void button1_Click(object sender, EventArgs e) // Nut them san pham
@@ -153,41 +140,6 @@ namespace DoAn_2.MenuTab
 
 		private void btndelete_Click(object sender, EventArgs e)
 		{
-		//	if (string.IsNullOrWhiteSpace(txtid.Text))
-		//	{
-		//		MessageBox.Show("Thông tin trống!");
-		//	}
-		//	else
-		//	{
-		//
-		//
-		//	try
-		//	{
-		//		using (var cmd = new SqlCommand("delete nhapkho where masp=@masp"))
-		//		{
-		//			cmd.Connection = connect;
-		//			cmd.Parameters.AddWithValue("@masp", txtid.Text);
-		//			connect.Open();
-		//			if (cmd.ExecuteNonQuery() > 0)
-		//			{
-		//				MessageBox.Show("Đã xóa");
-		//				clearsp();
-		//				gridviewsp();
-		//			}
-		//			else
-		//			{
-		//				MessageBox.Show("Lưu không thành công!");
-		//			}
-		//			connect.Close();
-		//		}
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		connect.Close();
-		//		MessageBox.Show("Error during insert: " + ex.Message);
-		//	}
-		//
-		//	}
 		}
 
 		private void btnclear_Click(object sender, EventArgs e)
@@ -280,11 +232,6 @@ namespace DoAn_2.MenuTab
 			
 		}
 
-		private void btnsearch_Click(object sender, EventArgs e)
-		{
-
-		}
-
 		private void comboloai_SelectedIndexChanged(object sender, EventArgs e)
 		{
 		//	if (string.IsNullOrWhiteSpace(txtid.Text))
@@ -296,11 +243,6 @@ namespace DoAn_2.MenuTab
 		//	{
 		//
 		//	}
-
-		}
-
-		private void ButtonAutoid_Click(object sender, EventArgs e)
-		{
 
 		}
 
@@ -394,41 +336,5 @@ namespace DoAn_2.MenuTab
 			}
 		}
 
-		// my code
-		private int prdId;
-
-		private void updateTable()
-		{
-			// Clear
-			while (dgvlstProduct.Rows.Count > 0)
-			{
-				dgvlstProduct.Rows.RemoveAt(0);
-			}
-
-			List<Product> lstProduct = PrdDao.getAll();
-
-			String[] datas = { "", "", "", "", "" };
-			lstProduct.ForEach(p => {
-				Catalog c = ctlDao.getByID(Convert.ToInt32(p.Catalog_ID));
-
-				datas[0] = p.ID.ToString(); // id
-				datas[1] = p.Product_Name; // ten
-				datas[2] = c.ID.ToString() + "_" + c.Catalog_Name; // loai
-				datas[3] = p.Amount.ToString(); // soluong
-				datas[4] = p.Price.ToString(); // gia
-
-				dgvlstProduct.Rows.Add(datas);
-
-			});
-		}
-
-		private void updateCombobox()
-		{
-			List<Catalog> lstCatalog = ctlDao.getAll();
-
-			lstCatalog.ForEach(c => {
-				comboloai.Items.Add(c.ID.ToString() + "_" + c.Catalog_Name);
-			});
-		}
 	}
 }

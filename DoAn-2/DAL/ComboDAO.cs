@@ -22,8 +22,7 @@ namespace DoAn_2.DAL
 
 		internal Combo save(Combo cb)
 		{
-			if (cb.ID == 0)
-				cb.ID = _context.Combo.Count() + 1;
+			cb.ID = _context.Combo.Count() + 1;
 			Combo newcb = _context.Combo.Add(cb);
 			_context.SaveChanges();
 			return newcb;

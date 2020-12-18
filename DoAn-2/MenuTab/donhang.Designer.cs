@@ -28,26 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-			this.dataGridView1 = new System.Windows.Forms.DataGridView();
+			this.dgvDonHang = new System.Windows.Forms.DataGridView();
 			this.textBoxSearch = new System.Windows.Forms.TextBox();
 			this.labelSearch = new System.Windows.Forms.Label();
 			this.ButtonReloadTable = new FontAwesome.Sharp.IconButton();
 			this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
 			this.btnExportExcel = new FontAwesome.Sharp.IconButton();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.dgvDonHang)).BeginInit();
 			this.SuspendLayout();
 			// 
-			// dataGridView1
+			// dgvDonHang
 			// 
-			this.dataGridView1.AllowUserToAddRows = false;
-			this.dataGridView1.AllowUserToDeleteRows = false;
-			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridView1.Location = new System.Drawing.Point(24, 81);
-			this.dataGridView1.Name = "dataGridView1";
-			this.dataGridView1.ReadOnly = true;
-			this.dataGridView1.Size = new System.Drawing.Size(835, 318);
-			this.dataGridView1.TabIndex = 0;
-			this.dataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentDoubleClick);
+			this.dgvDonHang.AllowUserToAddRows = false;
+			this.dgvDonHang.AllowUserToDeleteRows = false;
+			this.dgvDonHang.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dgvDonHang.Location = new System.Drawing.Point(24, 81);
+			this.dgvDonHang.Name = "dgvDonHang";
+			this.dgvDonHang.ReadOnly = true;
+			this.dgvDonHang.Size = new System.Drawing.Size(835, 318);
+			this.dgvDonHang.TabIndex = 0;
+			this.dgvDonHang.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentDoubleClick);
 			// 
 			// textBoxSearch
 			// 
@@ -114,11 +114,11 @@
 			this.Controls.Add(this.dateTimePicker1);
 			this.Controls.Add(this.labelSearch);
 			this.Controls.Add(this.textBoxSearch);
-			this.Controls.Add(this.dataGridView1);
+			this.Controls.Add(this.dgvDonHang);
 			this.Name = "donhang";
 			this.Text = "Đơn hàng";
 			this.Load += new System.EventHandler(this.donhang_Load);
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.dgvDonHang)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -126,7 +126,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.DataGridView dataGridView1;
+		private System.Windows.Forms.DataGridView dgvDonHang;
 		private System.Windows.Forms.TextBox textBoxSearch;
 		private System.Windows.Forms.Label labelSearch;
 		private FontAwesome.Sharp.IconButton ButtonReloadTable;

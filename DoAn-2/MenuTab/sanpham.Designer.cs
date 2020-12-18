@@ -305,7 +305,6 @@
 			this.Name = "sanpham";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Nhập kho";
-			this.Load += new System.EventHandler(this.sanpham_Load);
 			((System.ComponentModel.ISupportInitialize)(this.dgvlstProduct)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.ResumeLayout(false);
