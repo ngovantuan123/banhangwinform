@@ -81,7 +81,7 @@ namespace DoAn_2.MenuTab
 				prd.Price = gia;
 				prd.Img = txtanh.Text;
 
-				prd = PrdDao.save(prd);
+				prd = PrdDao.add(prd);
 
 				// Cap nhap bang san pham
 				updateTable();
@@ -139,15 +139,6 @@ namespace DoAn_2.MenuTab
 			{
 				MessageBox.Show("Sửa thất bại:" + ex.Message);
 			}
-		}
-
-		private void btndelete_Click(object sender, EventArgs e)
-		{
-		}
-
-		private void btnclear_Click(object sender, EventArgs e)
-		{
-		//	clearsp();
 		}
 
 		private void btnButtonChooseIMG_Click(object sender, EventArgs e)
@@ -237,16 +228,6 @@ namespace DoAn_2.MenuTab
 
 		private void comboloai_SelectedIndexChanged(object sender, EventArgs e)
 		{
-		//	if (string.IsNullOrWhiteSpace(txtid.Text))
-		//	{
-		//		autoid();
-		//		txtid.ReadOnly = false;
-		//	}
-		//	else
-		//	{
-		//
-		//	}
-
 		}
 
 		private void btnExportExcel_Click(object sender, EventArgs e)
@@ -319,10 +300,9 @@ namespace DoAn_2.MenuTab
 
 		private void dgvlstProduct_MouseDoubleClick(object sender, MouseEventArgs e)
 		{
-			DataGridView dataGridView1 = (DataGridView)sender;
-			if (dataGridView1.SelectedRows.Count >= 1)
+			if (dgvlstProduct.SelectedRows.Count >= 1)
 			{
-				DataGridViewRow row = dataGridView1.SelectedRows[0];
+				DataGridViewRow row = dgvlstProduct.SelectedRows[0];
 				prdId = Convert.ToInt32(row.Cells[0].Value.ToString());
 				txttensp.Text = row.Cells[1].Value.ToString();
 				txtsl.Text = row.Cells[3].Value.ToString();

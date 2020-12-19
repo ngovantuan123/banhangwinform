@@ -118,7 +118,7 @@ namespace DoAn_2.MenuTab
                 {
 					Catalog c = new Catalog();
 					c.Catalog_Name = textBoxTenLoai.Text;
-					catalogDAO.save(c);
+					catalogDAO.add(c);
 					clear();
 					loadtable();
 					MessageBox.Show("Thêm thành công!");

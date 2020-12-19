@@ -21,7 +21,7 @@ namespace DoAn_2.DAL
 		{
 			return _context.Catalog.Where(i => i.ID == id).FirstOrDefault();
 		}
-		public void save(Catalog catalog)
+		public void add(Catalog catalog)
         {
 			catalog.ID = _context.Catalog.Count()+1;
 			_context.Catalog.Add(catalog);

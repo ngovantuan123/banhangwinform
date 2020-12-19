@@ -20,7 +20,7 @@ namespace DoAn_2.DAL
 			return _context.Combo.Where(i => i.ID == id).FirstOrDefault();
 		}
 
-		internal Combo save(Combo cb)
+		internal Combo add(Combo cb)
 		{
 			cb.ID = _context.Combo.Count() + 1;
 			Combo newcb = _context.Combo.Add(cb);

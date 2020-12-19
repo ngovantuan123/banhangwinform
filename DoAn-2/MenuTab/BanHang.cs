@@ -574,44 +574,105 @@ namespace DoAn_2.MenuTab
 				MessageBox.Show("Thanh cong");
 
 
+
 			}
 			catch (Exception ex)
             {
 				MessageBox.Show("error :"+ex.Message);
             }
 			
+		private void txtmakh_TextChanged(object sender, EventArgs e)
+		{
 		}
 
 		
 
 		private void BanHang_Load(object sender, EventArgs e)
 		{
-			//try
-			//{
-			//	autoidHD();
-			//	string sqltensp = "select Product_Name from Product";
-			//	SqlCommand cmd = new SqlCommand(sqltensp, connect);
-			//	connect.Open();
-			//	SqlDataReader dr = cmd.ExecuteReader();
-			//	AutoCompleteStringCollection autotensp = new AutoCompleteStringCollection();
-			//	while (dr.Read())
-			//	{
-			//		autotensp.Add(dr.GetString(0));
-			//		
-			//	}
-			//	txttensp.AutoCompleteMode = AutoCompleteMode.Suggest;
-			//	txttensp.AutoCompleteSource = AutoCompleteSource.CustomSource;
-			//	txttensp.AutoCompleteCustomSource = autotensp;
-			//	connect.Close();
-			//}
-			//catch(Exception ex)
-			//{
-			//	MessageBox.Show(ex.Message);
-			//}
+		}
+
+		private void button1_Click(object sender, EventArgs e)
+		{
 
 		}
 
-		
+		private void txttensp_TextChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void txttensp_KeyDown(object sender, KeyEventArgs e)
+		{
+			//string loaisp1;
+			//double giamgiaTextbox;
+			//
+			//if(e.KeyCode==Keys.Enter)
+			//{
+			//}
+		}
+
+		private void txtsoluongsp_TextChanged(object sender, EventArgs e)
+		{
+			if (string.IsNullOrWhiteSpace(txtsoluongsp.Text))
+			{
+				
+			}
+			else if (string.IsNullOrWhiteSpace(txtdongiasp.Text))
+			{
+
+			}
+			//else if (string.IsNullOrWhiteSpace(txtgiamphantramsp.Text))
+			//{
+			//
+			//}
+			else
+			{
+				int slspHienTai = Convert.ToInt32(txtsoluongsp.Text);
+				if(slspHienTai>checkslsp)
+				{
+					txtsoluongsp.Text = checkslsp.ToString();
+				}
+				else
+				{
+					double giamgiaTextbox;
+					double slsp;
+					double dongiasp;
+					double thanhtiensp;
+					double thanhtiensp2;
+					slsp = double.Parse(txtsoluongsp.Text);
+					dongiasp = double.Parse(txtdongiasp.Text);
+					thanhtiensp = slsp * dongiasp;
+
+					//tien giam gia cua san pham
+					//giamgiaTextbox = double.Parse(txtgiamphantramsp.Text);
+					//double giamgiasp = (giamgiaTextbox * thanhtiensp) / 100;
+					//tien san pham = (so luong * don gia ) - giam gia
+					//thanhtiensp2 = thanhtiensp - giamgiasp;
+
+
+					//txttiensp.Text = thanhtiensp2.ToString("###,###");
+				}
+				
+
+			}
+ 
+		}
+
+		private void btnhuyHD_Click(object sender, EventArgs e)
+		{
+			huyhd();
+			autoidHD();
+
+		}
+
+		private void txttensp_TextChanged_1(object sender, EventArgs e)
+		{
+
+		}
+	 //   string maspdata1;
+
+		private void btnexit_Click(object sender, EventArgs e)
+		{
 
 		
 
@@ -630,6 +691,7 @@ namespace DoAn_2.MenuTab
 				}
 				connect.Close();
 			}
+			
 		}
 
 		

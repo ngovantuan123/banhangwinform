@@ -19,7 +19,7 @@ namespace DoAn_2.DAL
 			return _context.Product.Where(i => i.ID == id).FirstOrDefault();
 		}
 
-		internal Product save(Product product)
+		internal Product add(Product product)
 		{
 			if (product.ID == 0)
 				product.ID = _context.Product.Count() + 1;
