@@ -146,10 +146,6 @@ namespace DoAn_2.MenuTab
 
 				updateLstPrd();
 			}
-			else
-			{
-				MessageBox.Show("No data!");
-			}
 		}
 
 		// Validate tong tien chi nhap so, khong nhap chu
@@ -297,13 +293,14 @@ namespace DoAn_2.MenuTab
 			curCB.discountMoney = Convert.ToInt32(txtdiscountmoney.Text);
 			curCB.discount = txtdiscount.Text+"%";
 
-			cbDao.save(curCB);
+			cbDao.add(curCB);
 
 			updateTable();
 
 			MessageBox.Show("Thêm combo thành công");
 		}
 
+		// Sua combo
 		private void btnedit_Click(object sender, EventArgs e)
 		{
 			curCB.Combo_Name = txtname.Text;

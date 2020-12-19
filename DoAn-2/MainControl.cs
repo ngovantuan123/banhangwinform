@@ -1,23 +1,14 @@
 ﻿using System;
-using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using FontAwesome.Sharp;
 using System.Runtime.InteropServices;
 using DoAn_2.MenuTab;
-using System.Data.SqlClient;
-using System.IO;
 
 namespace DoAn_2
 {
 	public partial class MainControl : Form
 	{
-		SqlConnection connect = ClassKetnoi.connect;
-		// SqlConnection connect = new SqlConnection(@"Data Source=DESKTOP-A0E9NLI\MSSQLSERVER2019;Initial Catalog=doan-3;Integrated Security=True");
-		SqlCommand cmd = new SqlCommand();
-		SqlDataReader rdr;
-		DataSet ds;
-		SqlDataAdapter da;
 
 		private IconButton currentbtn;
 		private Panel lefborderbtn;
@@ -259,11 +250,6 @@ namespace DoAn_2
 			//	connect.Close();
 			//	MessageBox.Show("loi logo: " + ex.Message);
 			//}
-		}
-
-		private void paneltrangcon_Paint(object sender, PaintEventArgs e)
-		{
-
 		}
 
 		private void iconButtonSP_Click(object sender, EventArgs e)

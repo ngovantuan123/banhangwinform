@@ -592,59 +592,10 @@ namespace DoAn_2.MenuTab
 
 		private void txtmakh_TextChanged(object sender, EventArgs e)
 		{
-			try
-			{
-				/*if ()
-				{
-					//txttenkh.Clear();
-				}
-				else
-				{*/
-					connect.Open();
-					//string sqlkh = "select * from KhachHang where SDT=" + int.Parse(txtmakh.Text);
-					//SqlCommand cmd = new SqlCommand(sqlkh, connect);
-					//SqlDataReader dr = cmd.ExecuteReader();
-					//if (dr.Read())
-					//{
-						//txttenkh.Text = (dr["TenKH"].ToString());
-						//luu tru cho form TT
-						//TenKH = txttenkh.Text;
-						//SDT = txtmakh.Text;
-					//}
-					//connect.Close();
-				//}
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(ex.Message);
-			}
 		}
 
 		private void BanHang_Load(object sender, EventArgs e)
 		{
-			//try
-			//{
-			//	autoidHD();
-			//	string sqltensp = "select Product_Name from Product";
-			//	SqlCommand cmd = new SqlCommand(sqltensp, connect);
-			//	connect.Open();
-			//	SqlDataReader dr = cmd.ExecuteReader();
-			//	AutoCompleteStringCollection autotensp = new AutoCompleteStringCollection();
-			//	while (dr.Read())
-			//	{
-			//		autotensp.Add(dr.GetString(0));
-			//		
-			//	}
-			//	txttensp.AutoCompleteMode = AutoCompleteMode.Suggest;
-			//	txttensp.AutoCompleteSource = AutoCompleteSource.CustomSource;
-			//	txttensp.AutoCompleteCustomSource = autotensp;
-			//	connect.Close();
-			//}
-			//catch(Exception ex)
-			//{
-			//	MessageBox.Show(ex.Message);
-			//}
-
 		}
 
 		private void button1_Click(object sender, EventArgs e)
@@ -664,54 +615,6 @@ namespace DoAn_2.MenuTab
 			//
 			//if(e.KeyCode==Keys.Enter)
 			//{
-			//	connect.Open();
-			//	string sqlsp = "select * from tonkho where (tensp= N'"+ txttensp.Text+"') ";
-			//	SqlCommand cmd2 = new SqlCommand(sqlsp, connect);
-			//	SqlDataReader dr2 = cmd2.ExecuteReader();
-			//	if (dr2.Read())
-			//	{
-			//		checkslsp = Convert.ToInt32(dr2["soluongsp"]);
-			//		if(checkslsp<1)
-			//		{
-			//			MessageBox.Show("het hang");
-			//		}
-			//		else
-			//		{
-			//			txtmasp.Text = (dr2["masp"].ToString());
-			//			txtdongiasp.Text = (dr2["giabansp"].ToString());
-			//			txtsoluongsp.Text = "1";
-			//			txtgiamphantramsp.Text = (dr2["giamgia"].ToString());
-			//			comboBoxdonvisp.Text = (dr2["donvisp"].ToString());
-			//			comboBoxloaisp.Text = (dr2["loaisp"].ToString());
-			//			//thanhtiensp = soluong * don gia
-			//			double slsp;
-			//			double dongiasp;
-			//			double thanhtiensp;
-			//			double thanhtiensp2;
-			//			slsp = double.Parse(txtsoluongsp.Text);
-			//			dongiasp = double.Parse(txtdongiasp.Text);
-			//
-			//			thanhtiensp = slsp * dongiasp;
-			//			//tien giam gia cua san pham
-			//			giamgiaTextbox = double.Parse(txtgiamphantramsp.Text);
-			//			double giamgiasp = (giamgiaTextbox * thanhtiensp) / 100;
-			//			//tien san pham = (so luong * don gia ) - giam gia
-			//			thanhtiensp2 = thanhtiensp - giamgiasp;
-			//
-			//			txttiensp.Text = thanhtiensp2.ToString("###,###");
-			//
-			//			//luu tru cho from  TT
-			//			loaisp1 = comboBoxloaisp.Text;//
-			//			//  HDmasp = txtmasp.Text;
-			//			//  HDdongia = txtdongiasp.Text;
-			//			//  HDsl = txtsoluongsp.Text;
-			//			//  HDdonvi = comboBoxdonvisp.Text;
-			//			//  HDtensp = txttensp.Text;
-			//			 //   HDloai = loaisp1;
-			//		}
-			//
-			//	}
-			//	connect.Close();
 			//}
 		}
 
@@ -782,41 +685,8 @@ namespace DoAn_2.MenuTab
 
 		private void txtmasp_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Enter)
-			{
-				double giamgiaTextbox;
-				connect.Open();
-				string sqlsp = "select * from tonkho where (masp= '" + txtmasp.Text + "') ";
-				SqlCommand cmd2 = new SqlCommand(sqlsp, connect);
-				SqlDataReader dr2 = cmd2.ExecuteReader();
-				if (dr2.Read())
-				{
-					//txtmasp.Text = (dr2["masp"].ToString());
-					//txttensp.Text = (dr2["tensp"].ToString());
-					//txtdongiasp.Text = (dr2["giabansp"].ToString());
-					//txtsoluongsp.Text = "1";
-					//txtgiamphantramsp.Text = (dr2["giamgia"].ToString());
-					//comboBoxdonvisp.Text = (dr2["donvisp"].ToString());
-					//comboBoxloaisp.Text = (dr2["loaisp"].ToString());
-					////thanhtiensp = soluong * don gia
-					//double slsp;
-					//double dongiasp;
-					//double thanhtiensp;
-					//double thanhtiensp2;
-					//slsp = double.Parse(txtsoluongsp.Text);
-					//dongiasp = double.Parse(txtdongiasp.Text);
-					//thanhtiensp = slsp * dongiasp;
-					////tien giam gia cua san pham
-					//giamgiaTextbox = double.Parse(txtgiamphantramsp.Text);
-					//double giamgiasp = (giamgiaTextbox * thanhtiensp) / 100;
-					////tien san pham = (so luong * don gia ) - giam gia
-					//thanhtiensp2 = thanhtiensp - giamgiasp;
-					//
-					//txttiensp.Text = thanhtiensp2.ToString("###,###");
-
-				}
-				connect.Close();
-			}
+			//if (e.KeyCode == Keys.Enter)
+			
 		}
 
 		private void txtsoluongsp_KeyPress(object sender, KeyPressEventArgs e)

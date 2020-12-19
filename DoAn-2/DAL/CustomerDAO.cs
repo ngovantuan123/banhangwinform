@@ -14,5 +14,10 @@ namespace DoAn_2.DAL
         {
             return _context.Customer.ToList();
         }
+
+        public Customer getByID(int id)
+        {
+            return _context.Customer.Where(i => i.ID == id).FirstOrDefault();
+        }
     }
 }
