@@ -37,7 +37,6 @@ namespace DoAn_2.DAL
 				d.Amount = product.Amount;
 				d.Price = product.Price;
 				d.Catalog_ID = product.Catalog_ID;
-				d.Img = product.Img;
 			}
 			_context.SaveChanges();
 		}

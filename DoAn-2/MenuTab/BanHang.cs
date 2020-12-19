@@ -15,7 +15,6 @@ namespace DoAn_2.MenuTab
 		CustomerDAO customerDAO = new CustomerDAO();
 		ProductDAO productDAO = new ProductDAO();
 		ComboDAO comboDAO = new ComboDAO();
-		CatalogDAO catalogDAO = new CatalogDAO();
 		Project_BanHang1Entities1 _context = new Project_BanHang1Entities1();
 
 		public static string thanhtoan = "";//nut Tính tiền chuyển tạm thời cho form TT
@@ -44,7 +43,7 @@ namespace DoAn_2.MenuTab
 			List<Customer> cystomers= customerDAO.getAll();
 			cystomers.ForEach(m =>
 			{
-				cbc_kh.Items.Add(m.firstName+"_"+m.ID);
+				cbc_employee.Items.Add(m.firstName+"_"+m.ID);
 			});
 			
 
@@ -82,14 +81,14 @@ namespace DoAn_2.MenuTab
 		public void clearsp()
 		{
 			txtmasp.Clear();
-			tensanpham.Clear();
-			soluong.Value = 0;
+			txtsoluongsp.Clear();
 			txtdongiasp.Clear();
 			txttiensp.Clear();
 		}
 		public void huyhd()
 		{
 			txtmasp.Clear();
+			txtsoluongsp.Clear();
 			txtdongiasp.Clear();
 			txttiensp.Clear();
 			txttongcongtiensp.Clear();
@@ -98,92 +97,121 @@ namespace DoAn_2.MenuTab
 		}
 		private void btnthem_Click(object sender, EventArgs e)
 		{
+			bool found = false;
+			//if(dataGridView1.Rows.Count>0)
+			//{
+			//	foreach(DataGridViewRow row in dataGridView1.Rows)
+			//	{
+			//		if(Convert.ToString(row.Cells[0].Value) == txtmasp.Text)
+			//		{
+			//			//neu them san pham giong nhau se cộng dồn số lượng và tiền vào ô
+			//			row.Cells[2].Value = ( int.Parse(txtsoluongsp.Text) + Convert.ToInt16(row.Cells[2].Value.ToString()));
+			//			row.Cells[4].Value = (double.Parse(txttiensp.Text) + Convert.ToDouble(row.Cells[4].Value.ToString()));
+			//			found = true;
+			//			/////////////////////
+			//		}
+			//	}
+			//	if(!found)
+			//	{
+			//		dataGridView1.Rows.Add(txtmasp.Text, txttensp.Text, txtsoluongsp.Text, txtdongiasp.Text, txttiensp.Text, comboBoxdonvisp.Text, comboBoxloaisp.Text, txtgiamphantramsp.Text);
+			//	}
+			//}
+			//else
+			//{
+			//	dataGridView1.Rows.Add(txtmasp.Text, txttensp.Text, txtsoluongsp.Text, txtdongiasp.Text, txttiensp.Text, comboBoxdonvisp.Text, comboBoxloaisp.Text, txtgiamphantramsp.Text);
+			//}
+			/////////////////////
+			//int n = dataGridView1.Rows.Add();
+			//dataGridView1.Rows[n].Cells[0].Value = txtmasp.Text;
+			//dataGridView1.Rows[n].Cells[1].Value = txttensp.Text;
+			//dataGridView1.Rows[n].Cells[2].Value = txtsoluongsp.Text;
+			//dataGridView1.Rows[n].Cells[3].Value = txtdongiasp.Text;
+			//dataGridView1.Rows[n].Cells[4].Value = txttiensp.Text;
+			//dataGridView1.Rows[n].Cells[5].Value = comboBoxdonvisp.Text;
+			////    dataGridView1.Rows[n].Cells[6].Value = txtgiamphantramsp.Text;
+		   
+			//------------ tinh tong tien sp trong datagridview-------------///
+			double sum = 0;
+			for (int i = 0; i < dataGridView1.Rows.Count; ++i)
+			{
+				sum += Convert.ToDouble(dataGridView1.Rows[i].Cells[4].Value);
+			}
+			txttongcongtiensp.Text = sum.ToString("###,###");
+			//------------------- update sql -----------------//
 			try
 			{
-
-				
-				String idsp = txtmasp.Text;
-				if (chb_combo.Checked)
+				using (var cmdupdatesl = new SqlCommand("update tonkho set soluongsp=soluongsp - '" + txtsoluongsp.Text + "' where masp='" + txtmasp.Text + "' "))
 				{
-					idsp = "c_" + idsp;
-				}
-
-				// kiem tra trung
-				int tt = 0;
-				foreach (DataGridViewRow row in dataGridView1.Rows)
-				{
-					if (idsp.Equals(row.Cells[0].Value))
-                    {
-						throw new Exception("san pham da co trong gio hang");
-                    }
-					 
-				}
-
-                
-					String sl = soluong.Value.ToString();
-
-				if (soluong.Value <= 0)
-                {
-					throw new Exception("So luong phai lon hon 0");
-                }
-				String name = tensanpham.Text;
-				String txtdongia = txtdongiasp.Text;
-				String loai = "";
-				if (idsp.StartsWith("c_"))
-                {
-					String idc = idsp.Split('_')[1];
-					int id_combo = Convert.ToInt32(idc);
-					loai = "combo";
-					Combo _combo = _context.Combo.Where(m=>m.ID== id_combo).FirstOrDefault();
-					String[] ids = _combo.Product_List.Split(';');
-					for (int i = 0; i < ids.Length; i++)
+					cmdupdatesl.Connection = connect;
+					//cmd.Parameters.AddWithValue("@masp", txtmasp.Text);
+					//cmd.Parameters.AddWithValue("@slsp", txtsoluongsp.Text);
+					connect.Open();
+					if (cmdupdatesl.ExecuteNonQuery() > 0)
 					{
-						int idsptemp = Convert.ToInt32(ids[i]);
-						Product pro = _context.Product.Where(m => m.ID == idsptemp).FirstOrDefault();
-						if(pro.Amount == 0)
-                        {
-							throw new Exception("trong combo có san pham ma là :"+pro.ID+" hết hàng");
-                        }
-
+						MessageBox.Show("Đã update");
 					}
-
+					else
+					{
+						MessageBox.Show("Không thành công!");
+					}
+					connect.Close();
 				}
-                else {
-					Product pr = productDAO.getByID(Convert.ToInt32(idsp));
-				    loai = catalogDAO.getByID(Convert.ToInt32(pr.Catalog_ID)).Catalog_Name;
-					if(pr.Amount < soluong.Value)
-                    {
-						throw new Exception("sản pahmr chỉ còn lại :"+pr.Amount);
-                    }
-				}
-				String[] data = { idsp, name, loai, sl, txtdongia };
-				dataGridView1.Rows.Add(data);			
-				clearsp();
-				foreach (DataGridViewRow row in dataGridView1.Rows)
-				{
-					tt += Convert.ToInt32(row.Cells[3].Value) * Convert.ToInt32(row.Cells[4].Value);
-				}
-					txttongcongtiensp.Text = tt.ToString();
 
 			}
-			catch(Exception ex)
-            {
-				MessageBox.Show("error:"+ex.Message);
+			catch (Exception ex)
+			{
+				connect.Close();
+				MessageBox.Show("lỗi update" + ex.Message);
 			}
+			clearsp();
 		}
 
 		private void btnsua_Click(object sender, EventArgs e)
 		{
-            try{
-
-
-
-            }catch(Exception ex)
-            {
-				MessageBox.Show("error:" + ex.Message);
+			//tra lai slsp
+			using (var cmdedit = new SqlCommand("update tonkho set soluongsp=soluongsp + '" + slspedit + "' where masp='" + maspedit + "' "))
+			{
+				cmdedit.Connection = connect;
+				connect.Open();
+				if (cmdedit.ExecuteNonQuery() > 0)
+				{
+					MessageBox.Show("Đã update");
+					connect.Close();
+				}
+				else
+				{
+					MessageBox.Show("Không thành công!");
+					connect.Close();
+				}
+				connect.Close();
 			}
 
-		   
+			DataGridViewRow newDataRow = dataGridView1.Rows[indexRow];
+			newDataRow.Cells[0].Value = txtmasp.Text;
+			//newDataRow.Cells[1].Value = txttensp.Text;
+			newDataRow.Cells[2].Value = txtsoluongsp.Text;
+			newDataRow.Cells[3].Value = txtdongiasp.Text;
+			newDataRow.Cells[4].Value = txttiensp.Text;
+
+			//
+
+			// tru slsp
+		   using (var cmdedit2 = new SqlCommand("update tonkho set soluongsp=soluongsp - '" + txtsoluongsp.Text + "' where masp='" + txtmasp.Text + "' "))
+		   {
+			   cmdedit2.Connection = connect;
+			   connect.Open();
+			   if (cmdedit2.ExecuteNonQuery() > 0)
+			   {
+				   MessageBox.Show("Đã update");
+				   connect.Close();
+			   }
+			   else
+			   {
+				   MessageBox.Show("Không thành công!");
+				   connect.Close();
+			   }
+			   connect.Close();
+		   }
 
 		   clearsp();
 		}
@@ -192,7 +220,25 @@ namespace DoAn_2.MenuTab
 		private void dataGridView1_DoubleClick(object sender, EventArgs e)
 		{
 			
-			
+			if (dataGridView1.CurrentRow.Index != -1)
+			{
+				clearsp();
+			   
+
+				txtmasp.Text = dataGridView1.CurrentRow.Cells[0].Value.ToString();
+				//txttensp.Text = dataGridView1.CurrentRow.Cells[1].Value.ToString();
+				txtsoluongsp.Text = dataGridView1.CurrentRow.Cells[2].Value.ToString();
+				txtdongiasp.Text = dataGridView1.CurrentRow.Cells[3].Value.ToString();
+			   
+				txttiensp.Text = dataGridView1.CurrentRow.Cells[4].Value.ToString();
+
+				maspedit = dataGridView1.CurrentRow.Cells[0].Value.ToString();
+				slspedit = Convert.ToInt32(dataGridView1.CurrentRow.Cells[2].Value.ToString());
+			}
+			else
+			{
+				MessageBox.Show("No data!");
+			}
 		}
 		string masp1;
 		int slsp1;
@@ -246,19 +292,19 @@ namespace DoAn_2.MenuTab
                     {
 						txtdongiasp.Text = p.Price.ToString();
 						tensanpham.Text = p.Product_Name;
-						soluong.Value = 0;
-						int sl = Convert.ToInt32(soluong.Text);
-						
-						txttiensp.Text = (sl * Convert.ToInt32(txtdongiasp.Text)).ToString();
 					}
                     else
                     {
 						MessageBox.Show("Không tìm thấy!");
 					}
+
+
+
+
 			}
             else
             {
-					//tim trong bang combo
+					//timf trong bang combo
 					Combo combo = comboDAO.getByID(idsanpham);
 					if (combo != null)
 					{
@@ -490,99 +536,89 @@ namespace DoAn_2.MenuTab
 		string coldongiasp;
 		private void btnthanhtoan_Click(object sender, EventArgs e)
 		{
-            try
-            {
-				if (cbc_kh.SelectedItem==null)
-                {
-					throw new Exception("chua chon khach hang");
-                }
-				if(dataGridView1.Rows.Count == 0)
-                {
-					throw new Exception("chua co san pham nao");
-				}
-				int idiv = _context.Invoice.Count() + 1;
-				Invoice invoice = new Invoice();
-				invoice.createdDate = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss").ToString();
-				invoice.customerAddress = "";
-				invoice.Invoice_Name = "In shop invoice";
-				invoice.shipDate = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss").ToString(); 
-				invoice.Shipper_ID = null;
-				invoice.status = 2;
-				invoice.totalMoney = txttongcongtiensp.Text;
-				invoice.Customer_ID = Convert.ToInt32(cbc_kh.SelectedItem.ToString().Split('_')[1]);
-				List<InvoiceDetail> l_detailInvoice = new List<InvoiceDetail>();
-				foreach (DataGridViewRow row in dataGridView1.Rows)
-				{
-					InvoiceDetail invoiceDetail = new InvoiceDetail();
-					if(row.Cells[0].Value.ToString().StartsWith("c_"))
-                    {
-						invoiceDetail.Product_ID = -1;
-						invoiceDetail.Combo_ID =Convert.ToInt32(row.Cells[0].Value.ToString().Split('_')[1]);
-						Combo c = _context.Combo.Where(m => m.ID == invoiceDetail.Combo_ID).FirstOrDefault();
-						String[] ids = c.Product_List.Split(';');
-						for(int i = 0; i < ids.Length; i++)
-                        {
-							int idsp = Convert.ToInt32(ids[i]);
-							Product pro = _context.Product.Where(m => m.ID == idsp).FirstOrDefault();
-							pro.Amount = pro.Amount - 1;
-							_context.SaveChanges();
 
-                        }
-                    }
-                    else
-                    {
-						invoiceDetail.Combo_ID = -1;
-						invoiceDetail.Product_ID = Convert.ToInt32(row.Cells[0].Value.ToString());
-						Product pro = _context.Product.Where(m => m.ID == invoiceDetail.Product_ID).FirstOrDefault();
-						pro.Amount = pro.Amount - invoiceDetail.Amount;
-						_context.SaveChanges();
-					}
-					invoiceDetail.Amount = Convert.ToInt32(row.Cells[3].Value);
-					invoiceDetail.Invoice_ID = idiv;
-					invoiceDetail.Price= Convert.ToInt32(row.Cells[4].Value);
-					l_detailInvoice.Add(invoiceDetail);
-					
-				}
+			//------------------------------------------------// pass datadridview to listbox formTT
+			ListBox listBox1a = new ListBox();
 
-				//save
-				_context.Invoice.Add(invoice);
-				l_detailInvoice.ForEach(i =>
-				{
-					//save invoice detail
-					string strSQL = "INSERT INTO InvoiceDetail ";
-					strSQL += " (Invoice_ID,Product_ID,Combo_ID,Amount,Price)";
-					strSQL += " VALUES";
-					strSQL += " (@Invoice_ID,@Product_ID,@Combo_ID,@Amount";
-					strSQL += ",@Price)";
-					List<SqlParameter> parameterList = new List<SqlParameter>();
-					parameterList.Add(new SqlParameter("@Invoice_ID", i.Invoice_ID));
-					parameterList.Add(new SqlParameter("@Product_ID", i.Product_ID));
-					parameterList.Add(new SqlParameter("@Combo_ID", i.Combo_ID));
-					parameterList.Add(new SqlParameter("@Amount", i.Amount));
-					parameterList.Add(new SqlParameter("@Price", i.Price));
-					
-					SqlParameter[] Param = parameterList.ToArray();
-
-					int noOfRowInserted = _context.Database.ExecuteSqlCommand(strSQL, Param);
-				});
-				_context.SaveChanges();
-				dataGridView1.Rows.Clear();
-				txttongcongtiensp.Clear();
-
-				//giam so luong san pham
-				
-				MessageBox.Show("Thanh cong");
-
-
+			foreach (DataGridViewRow item in dataGridView1.Rows)
+			{
+				listBox1a.Items.Add(item.Cells[1].Value.ToString() + '/' + item.Cells[2].Value.ToString() + '/' + item.Cells[3].Value.ToString());
+			  //--  listBox1a.Items.Add(item.Cells[1].Value.ToString().PadRight(30) + item.Cells[4].Value.ToString());
 			}
-			catch (Exception ex)
-            {
-				MessageBox.Show("error :"+ex.Message);
-            }
+			//------------------------------------------------// datagridview masp,tensp,slsp to list
+			//pass datagridview to listbox: masp,tensp,sl
+			ListBox listBox3 = new ListBox();
+			ListBox listBox4 = new ListBox();
+			ListBox listBox5 = new ListBox();
+			ListBox listBox6 = new ListBox();
+			ListBox listBox7 = new ListBox();
+			ListBox listBox8 = new ListBox();
+			foreach (DataGridViewRow item in dataGridView1.Rows)
+			{
+				listBox3.Items.Add(item.Cells[0].Value.ToString()).ToString();//masp
+				listBox4.Items.Add(item.Cells[1].Value.ToString()).ToString();//tensp
+				listBox5.Items.Add(item.Cells[2].Value.ToString()).ToString();//slsp
+				listBox6.Items.Add(item.Cells[6].Value.ToString()).ToString();//loai
+				listBox7.Items.Add(item.Cells[5].Value.ToString()).ToString();//donvi
+				listBox8.Items.Add(item.Cells[3].Value.ToString()).ToString();//dongia
+				colmasp = string.Join(",", listBox3.Items.Cast<String>());
+				coltensp = string.Join(",", listBox4.Items.Cast<String>());
+				colslsp = string.Join(",", listBox5.Items.Cast<String>());
+				colloaisp = string.Join(",", listBox6.Items.Cast<String>());
+				coldvsp = string.Join(",", listBox7.Items.Cast<String>());
+				coldongiasp = string.Join(",", listBox8.Items.Cast<String>());
+			}
 			
+			HDmasp = colmasp;
+			HDtensp = coltensp;
+			HDsl = colslsp;
+			HDloai = colloaisp;
+			HDdonvi = coldvsp;
+			HDdongia = coldongiasp;
+			//---------------------------------------------------//
+			//pass data form tt
+			//thanhtoan = txtthanhtoan.Text;
+			var form2 = new BanHangTT(listBox1a.Items);
+			huyhd();
+			autoidHD(); // clear toan bo textbox.... và làm mới ID
+			form2.Show();
+			//------------------------------------------------//
+
+		   
+			
+		  //  BanHangTT frmTT = new BanHangTT();
+		  //  frmTT.Show();  
 		}
 
-		
+		private void txtmakh_TextChanged(object sender, EventArgs e)
+		{
+			try
+			{
+				/*if ()
+				{
+					//txttenkh.Clear();
+				}
+				else
+				{*/
+					connect.Open();
+					//string sqlkh = "select * from KhachHang where SDT=" + int.Parse(txtmakh.Text);
+					//SqlCommand cmd = new SqlCommand(sqlkh, connect);
+					//SqlDataReader dr = cmd.ExecuteReader();
+					//if (dr.Read())
+					//{
+						//txttenkh.Text = (dr["TenKH"].ToString());
+						//luu tru cho form TT
+						//TenKH = txttenkh.Text;
+						//SDT = txtmakh.Text;
+					//}
+					//connect.Close();
+				//}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
+		}
 
 		private void BanHang_Load(object sender, EventArgs e)
 		{
@@ -611,9 +647,138 @@ namespace DoAn_2.MenuTab
 
 		}
 
-		
+		private void button1_Click(object sender, EventArgs e)
+		{
 
-		
+		}
+
+		private void txttensp_TextChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void txttensp_KeyDown(object sender, KeyEventArgs e)
+		{
+			//string loaisp1;
+			//double giamgiaTextbox;
+			//
+			//if(e.KeyCode==Keys.Enter)
+			//{
+			//	connect.Open();
+			//	string sqlsp = "select * from tonkho where (tensp= N'"+ txttensp.Text+"') ";
+			//	SqlCommand cmd2 = new SqlCommand(sqlsp, connect);
+			//	SqlDataReader dr2 = cmd2.ExecuteReader();
+			//	if (dr2.Read())
+			//	{
+			//		checkslsp = Convert.ToInt32(dr2["soluongsp"]);
+			//		if(checkslsp<1)
+			//		{
+			//			MessageBox.Show("het hang");
+			//		}
+			//		else
+			//		{
+			//			txtmasp.Text = (dr2["masp"].ToString());
+			//			txtdongiasp.Text = (dr2["giabansp"].ToString());
+			//			txtsoluongsp.Text = "1";
+			//			txtgiamphantramsp.Text = (dr2["giamgia"].ToString());
+			//			comboBoxdonvisp.Text = (dr2["donvisp"].ToString());
+			//			comboBoxloaisp.Text = (dr2["loaisp"].ToString());
+			//			//thanhtiensp = soluong * don gia
+			//			double slsp;
+			//			double dongiasp;
+			//			double thanhtiensp;
+			//			double thanhtiensp2;
+			//			slsp = double.Parse(txtsoluongsp.Text);
+			//			dongiasp = double.Parse(txtdongiasp.Text);
+			//
+			//			thanhtiensp = slsp * dongiasp;
+			//			//tien giam gia cua san pham
+			//			giamgiaTextbox = double.Parse(txtgiamphantramsp.Text);
+			//			double giamgiasp = (giamgiaTextbox * thanhtiensp) / 100;
+			//			//tien san pham = (so luong * don gia ) - giam gia
+			//			thanhtiensp2 = thanhtiensp - giamgiasp;
+			//
+			//			txttiensp.Text = thanhtiensp2.ToString("###,###");
+			//
+			//			//luu tru cho from  TT
+			//			loaisp1 = comboBoxloaisp.Text;//
+			//			//  HDmasp = txtmasp.Text;
+			//			//  HDdongia = txtdongiasp.Text;
+			//			//  HDsl = txtsoluongsp.Text;
+			//			//  HDdonvi = comboBoxdonvisp.Text;
+			//			//  HDtensp = txttensp.Text;
+			//			 //   HDloai = loaisp1;
+			//		}
+			//
+			//	}
+			//	connect.Close();
+			//}
+		}
+
+		private void txtsoluongsp_TextChanged(object sender, EventArgs e)
+		{
+			if (string.IsNullOrWhiteSpace(txtsoluongsp.Text))
+			{
+				
+			}
+			else if (string.IsNullOrWhiteSpace(txtdongiasp.Text))
+			{
+
+			}
+			//else if (string.IsNullOrWhiteSpace(txtgiamphantramsp.Text))
+			//{
+			//
+			//}
+			else
+			{
+				int slspHienTai = Convert.ToInt32(txtsoluongsp.Text);
+				if(slspHienTai>checkslsp)
+				{
+					txtsoluongsp.Text = checkslsp.ToString();
+				}
+				else
+				{
+					double giamgiaTextbox;
+					double slsp;
+					double dongiasp;
+					double thanhtiensp;
+					double thanhtiensp2;
+					slsp = double.Parse(txtsoluongsp.Text);
+					dongiasp = double.Parse(txtdongiasp.Text);
+					thanhtiensp = slsp * dongiasp;
+
+					//tien giam gia cua san pham
+					//giamgiaTextbox = double.Parse(txtgiamphantramsp.Text);
+					//double giamgiasp = (giamgiaTextbox * thanhtiensp) / 100;
+					//tien san pham = (so luong * don gia ) - giam gia
+					//thanhtiensp2 = thanhtiensp - giamgiasp;
+
+
+					//txttiensp.Text = thanhtiensp2.ToString("###,###");
+				}
+				
+
+			}
+ 
+		}
+
+		private void btnhuyHD_Click(object sender, EventArgs e)
+		{
+			huyhd();
+			autoidHD();
+
+		}
+
+		private void txttensp_TextChanged_1(object sender, EventArgs e)
+		{
+
+		}
+	 //   string maspdata1;
+
+		private void btnexit_Click(object sender, EventArgs e)
+		{
+
+		}
 
 		private void txtmasp_KeyDown(object sender, KeyEventArgs e)
 		{
@@ -626,56 +791,61 @@ namespace DoAn_2.MenuTab
 				SqlDataReader dr2 = cmd2.ExecuteReader();
 				if (dr2.Read())
 				{
+					//txtmasp.Text = (dr2["masp"].ToString());
+					//txttensp.Text = (dr2["tensp"].ToString());
+					//txtdongiasp.Text = (dr2["giabansp"].ToString());
+					//txtsoluongsp.Text = "1";
+					//txtgiamphantramsp.Text = (dr2["giamgia"].ToString());
+					//comboBoxdonvisp.Text = (dr2["donvisp"].ToString());
+					//comboBoxloaisp.Text = (dr2["loaisp"].ToString());
+					////thanhtiensp = soluong * don gia
+					//double slsp;
+					//double dongiasp;
+					//double thanhtiensp;
+					//double thanhtiensp2;
+					//slsp = double.Parse(txtsoluongsp.Text);
+					//dongiasp = double.Parse(txtdongiasp.Text);
+					//thanhtiensp = slsp * dongiasp;
+					////tien giam gia cua san pham
+					//giamgiaTextbox = double.Parse(txtgiamphantramsp.Text);
+					//double giamgiasp = (giamgiaTextbox * thanhtiensp) / 100;
+					////tien san pham = (so luong * don gia ) - giam gia
+					//thanhtiensp2 = thanhtiensp - giamgiasp;
+					//
+					//txttiensp.Text = thanhtiensp2.ToString("###,###");
 
 				}
 				connect.Close();
 			}
 		}
 
-		
-		
-
-		
-
-		
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-			
-		}
-
-        private void soluong_Click(object sender, EventArgs e)
-        {
-			int sl = Convert.ToInt32(soluong.Text);
-
-			txttiensp.Text = (sl * Convert.ToInt32(txtdongiasp.Text)).ToString();
-		}
-
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-			if (dataGridView1.CurrentRow.Index != -1)
+		private void txtsoluongsp_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) )
 			{
-				clearsp();
-
-
-				txtmasp.Text = dataGridView1.CurrentRow.Cells[0].Value.ToString();
-				tensanpham.Text = dataGridView1.CurrentRow.Cells[1].Value.ToString();
-				txtdongiasp.Text = dataGridView1.CurrentRow.Cells[4].Value.ToString();
-				soluong.Value =Convert.ToInt32( dataGridView1.CurrentRow.Cells[3].Value.ToString());
-
-			}
-			else
-			{
-				MessageBox.Show("No data!");
+				e.Handled = true;
 			}
 		}
 
-        private void btnxoa_Click_1(object sender, EventArgs e)
-        {
-			foreach (DataGridViewRow item in this.dataGridView1.SelectedRows)
+		private void txtdongiasp_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) )
 			{
-				dataGridView1.Rows.RemoveAt(item.Index);
-				txttongcongtiensp.Text = ((Convert.ToInt32(txttongcongtiensp.Text) - (Convert.ToInt32(item.Cells[3].Value) * Convert.ToInt32(item.Cells[4].Value)))).ToString();
+				e.Handled = true;
 			}
 		}
-    }
+
+		private void txttiensp_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ',')
+			{
+				e.Handled = true;
+			}
+		}
+
+		private void btnscansp_Click(object sender, EventArgs e)
+		{
+
+		}
+	}
 }

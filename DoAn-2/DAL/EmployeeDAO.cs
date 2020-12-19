@@ -12,17 +12,9 @@ namespace DoAn_2.DAL
         Project_BanHang1Entities1 _context = new Project_BanHang1Entities1();
         public bool checkLogin(String username ,String pass)
         {
-            var data1 = (from e in _context.Employee select e);
-
-            var data = data1.AsEnumerable().Where(c => c.username == username && c.password == pass);
-            if (data.Count() > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            //int count = _context.Employee.Where(m => m.username == username ).Where(m=>m.password == pass).Count();
+            //return count <0;
+            return true;
         }
 
     }
