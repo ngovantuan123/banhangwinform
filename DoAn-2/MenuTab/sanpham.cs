@@ -28,7 +28,7 @@ namespace DoAn_2.MenuTab
 
 			List<Product> lstProduct = PrdDao.getAll();
 
-			String[] datas = { "", "", "", "", "" };
+			String[] datas = { "", "", "", "", "","" };
 			lstProduct.ForEach(p => {
 				Catalog c = ctlDao.getByID(Convert.ToInt32(p.Catalog_ID));
 
@@ -37,6 +37,7 @@ namespace DoAn_2.MenuTab
 				datas[2] = c.ID.ToString() + "_" + c.Catalog_Name; // loai
 				datas[3] = p.Amount.ToString(); // soluong
 				datas[4] = p.Price.ToString(); // gia
+				datas[5] = p.Img;
 
 				dgvlstProduct.Rows.Add(datas);
 
@@ -78,6 +79,7 @@ namespace DoAn_2.MenuTab
 				prd.Catalog_ID = loai;
 				prd.Amount = soluong;
 				prd.Price = gia;
+				prd.Img = txtanh.Text;
 
 				prd = PrdDao.save(prd);
 
@@ -123,6 +125,7 @@ namespace DoAn_2.MenuTab
 				prd.Catalog_ID = loai;
 				prd.Amount = soluong;
 				prd.Price = gia;
+				prd.Img = txtanh.Text;
 
 				PrdDao.update(prd);
 
@@ -149,23 +152,23 @@ namespace DoAn_2.MenuTab
 
 		private void btnButtonChooseIMG_Click(object sender, EventArgs e)
 		{
-		//	try
-		//	{
-		//		OpenFileDialog dlg = new OpenFileDialog();
-		//		if(dlg.ShowDialog()==DialogResult.OK)
-		//		{
-		//			imgloc = dlg.FileName.ToString();
-		//			pictureBox1.ImageLocation = imgloc;
-		//		}
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		connect.Close();
-		//		MessageBox.Show("Error during insert: " + ex.Message);
-		//	}
-		}
+            try
+            {
+                OpenFileDialog dlg = new OpenFileDialog();
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    String imgloc = dlg.FileName.ToString();
+                    pictureBox1.ImageLocation = imgloc;
+					txtanh.Text = imgloc;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error during insert: " + ex.Message);
+            }
+        }
 
-		private void btnDeleteIMG_Click(object sender, EventArgs e)
+        private void btnDeleteIMG_Click(object sender, EventArgs e)
 		{
 		//	try
 		//	{
@@ -324,7 +327,10 @@ namespace DoAn_2.MenuTab
 				txttensp.Text = row.Cells[1].Value.ToString();
 				txtsl.Text = row.Cells[3].Value.ToString();
 				txtgiaban.Text = row.Cells[4].Value.ToString();
-
+				if(row.Cells[5].Value != null) { 
+				txtanh.Text = row.Cells[5].Value.ToString();
+				pictureBox1.ImageLocation = row.Cells[5].Value.ToString();
+				}
 				for (int i = 0; i < comboloai.Items.Count; i++)
 				{
 					if (comboloai.Items[i].ToString().Equals(row.Cells[2].Value.ToString()))
@@ -336,5 +342,6 @@ namespace DoAn_2.MenuTab
 			}
 		}
 
-	}
+       
+    }
 }

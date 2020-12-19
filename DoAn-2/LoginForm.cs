@@ -14,6 +14,7 @@ namespace DoAn_2
 	{
 		Project_BanHang1Entities1 _context = new Project_BanHang1Entities1();
 		EmployeeDAO employeeDAO = new EmployeeDAO();
+        BLL.AccountBLL acountBLL = new BLL.AccountBLL();
 		public static string usernv = "";
 		public LoginForm()
 		{   
@@ -72,7 +73,7 @@ namespace DoAn_2
 			String username = txtuser.Text;
 			String pass= MD5Hash(txtpass.Text);
 			
-			if(employeeDAO.checkLogin(username,pass) == true)
+			if(acountBLL.checkLogin(username,pass) == true)
             {
 				LoginForm.usernv = username;
 				MainControl mainmenu = new MainControl();
