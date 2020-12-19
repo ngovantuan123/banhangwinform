@@ -36,7 +36,6 @@
             this.dongiasp = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txttongcongtiensp = new System.Windows.Forms.TextBox();
             this.txtmasp = new System.Windows.Forms.TextBox();
-            this.txtsoluongsp = new System.Windows.Forms.TextBox();
             this.txtdongiasp = new System.Windows.Forms.TextBox();
             this.txttiensp = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -47,19 +46,18 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
-            this.btnexit = new FontAwesome.Sharp.IconButton();
-            this.btnhuyHD = new FontAwesome.Sharp.IconButton();
             this.btnthanhtoan = new FontAwesome.Sharp.IconButton();
-            this.btnsua = new FontAwesome.Sharp.IconButton();
             this.btnthem = new FontAwesome.Sharp.IconButton();
-            this.btnxoa = new FontAwesome.Sharp.IconButton();
             this.btntim = new FontAwesome.Sharp.IconButton();
-            this.cbc_employee = new System.Windows.Forms.ComboBox();
+            this.cbc_kh = new System.Windows.Forms.ComboBox();
             this.chb_combo = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.tensanpham = new System.Windows.Forms.TextBox();
+            this.soluong = new System.Windows.Forms.NumericUpDown();
+            this.btnxoa = new FontAwesome.Sharp.IconButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.soluong)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -78,6 +76,7 @@
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.Size = new System.Drawing.Size(523, 389);
             this.dataGridView1.TabIndex = 2;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.DoubleClick += new System.EventHandler(this.dataGridView1_DoubleClick);
             // 
             // masp
@@ -126,15 +125,6 @@
             this.txtmasp.TabIndex = 10;
             this.txtmasp.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtmasp_KeyDown);
             // 
-            // txtsoluongsp
-            // 
-            this.txtsoluongsp.Location = new System.Drawing.Point(638, 105);
-            this.txtsoluongsp.Name = "txtsoluongsp";
-            this.txtsoluongsp.Size = new System.Drawing.Size(133, 20);
-            this.txtsoluongsp.TabIndex = 13;
-            this.txtsoluongsp.TextChanged += new System.EventHandler(this.txtsoluongsp_TextChanged);
-            this.txtsoluongsp.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtsoluongsp_KeyPress);
-            // 
             // txtdongiasp
             // 
             this.txtdongiasp.Location = new System.Drawing.Point(638, 181);
@@ -142,7 +132,6 @@
             this.txtdongiasp.ReadOnly = true;
             this.txtdongiasp.Size = new System.Drawing.Size(133, 20);
             this.txtdongiasp.TabIndex = 14;
-            this.txtdongiasp.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtdongiasp_KeyPress);
             // 
             // txttiensp
             // 
@@ -151,7 +140,6 @@
             this.txttiensp.ReadOnly = true;
             this.txttiensp.Size = new System.Drawing.Size(133, 20);
             this.txttiensp.TabIndex = 16;
-            this.txttiensp.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txttiensp_KeyPress);
             // 
             // label1
             // 
@@ -233,34 +221,6 @@
             this.label16.TabIndex = 44;
             this.label16.Text = "VNĐ";
             // 
-            // btnexit
-            // 
-            this.btnexit.IconChar = FontAwesome.Sharp.IconChar.None;
-            this.btnexit.IconColor = System.Drawing.Color.Black;
-            this.btnexit.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnexit.IconSize = 16;
-            this.btnexit.Location = new System.Drawing.Point(800, 445);
-            this.btnexit.Name = "btnexit";
-            this.btnexit.Size = new System.Drawing.Size(77, 35);
-            this.btnexit.TabIndex = 26;
-            this.btnexit.Text = "Thoát";
-            this.btnexit.UseVisualStyleBackColor = true;
-            this.btnexit.Click += new System.EventHandler(this.btnexit_Click);
-            // 
-            // btnhuyHD
-            // 
-            this.btnhuyHD.IconChar = FontAwesome.Sharp.IconChar.None;
-            this.btnhuyHD.IconColor = System.Drawing.Color.Black;
-            this.btnhuyHD.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnhuyHD.IconSize = 16;
-            this.btnhuyHD.Location = new System.Drawing.Point(712, 445);
-            this.btnhuyHD.Name = "btnhuyHD";
-            this.btnhuyHD.Size = new System.Drawing.Size(77, 35);
-            this.btnhuyHD.TabIndex = 25;
-            this.btnhuyHD.Text = "Hủy HĐ";
-            this.btnhuyHD.UseVisualStyleBackColor = true;
-            this.btnhuyHD.Click += new System.EventHandler(this.btnhuyHD_Click);
-            // 
             // btnthanhtoan
             // 
             this.btnthanhtoan.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -276,47 +236,19 @@
             this.btnthanhtoan.UseVisualStyleBackColor = true;
             this.btnthanhtoan.Click += new System.EventHandler(this.btnthanhtoan_Click);
             // 
-            // btnsua
-            // 
-            this.btnsua.IconChar = FontAwesome.Sharp.IconChar.None;
-            this.btnsua.IconColor = System.Drawing.Color.Black;
-            this.btnsua.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnsua.IconSize = 16;
-            this.btnsua.Location = new System.Drawing.Point(629, 292);
-            this.btnsua.Name = "btnsua";
-            this.btnsua.Size = new System.Drawing.Size(77, 55);
-            this.btnsua.TabIndex = 23;
-            this.btnsua.Text = "Sửa";
-            this.btnsua.UseVisualStyleBackColor = true;
-            this.btnsua.Click += new System.EventHandler(this.btnsua_Click);
-            // 
             // btnthem
             // 
             this.btnthem.IconChar = FontAwesome.Sharp.IconChar.None;
             this.btnthem.IconColor = System.Drawing.Color.Black;
             this.btnthem.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnthem.IconSize = 20;
-            this.btnthem.Location = new System.Drawing.Point(546, 292);
+            this.btnthem.Location = new System.Drawing.Point(577, 271);
             this.btnthem.Name = "btnthem";
             this.btnthem.Size = new System.Drawing.Size(77, 55);
             this.btnthem.TabIndex = 22;
             this.btnthem.Text = "Thêm";
             this.btnthem.UseVisualStyleBackColor = true;
             this.btnthem.Click += new System.EventHandler(this.btnthem_Click);
-            // 
-            // btnxoa
-            // 
-            this.btnxoa.IconChar = FontAwesome.Sharp.IconChar.None;
-            this.btnxoa.IconColor = System.Drawing.Color.Black;
-            this.btnxoa.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnxoa.IconSize = 16;
-            this.btnxoa.Location = new System.Drawing.Point(712, 292);
-            this.btnxoa.Name = "btnxoa";
-            this.btnxoa.Size = new System.Drawing.Size(77, 55);
-            this.btnxoa.TabIndex = 21;
-            this.btnxoa.Text = "Xóa";
-            this.btnxoa.UseVisualStyleBackColor = true;
-            this.btnxoa.Click += new System.EventHandler(this.btnxoa_Click);
             // 
             // btntim
             // 
@@ -332,13 +264,13 @@
             this.btntim.UseVisualStyleBackColor = true;
             this.btntim.Click += new System.EventHandler(this.btnhuy_Click);
             // 
-            // cbc_employee
+            // cbc_kh
             // 
-            this.cbc_employee.FormattingEnabled = true;
-            this.cbc_employee.Location = new System.Drawing.Point(96, 27);
-            this.cbc_employee.Name = "cbc_employee";
-            this.cbc_employee.Size = new System.Drawing.Size(169, 21);
-            this.cbc_employee.TabIndex = 45;
+            this.cbc_kh.FormattingEnabled = true;
+            this.cbc_kh.Location = new System.Drawing.Point(96, 27);
+            this.cbc_kh.Name = "cbc_kh";
+            this.cbc_kh.Size = new System.Drawing.Size(169, 21);
+            this.cbc_kh.TabIndex = 45;
             // 
             // chb_combo
             // 
@@ -378,16 +310,41 @@
             this.tensanpham.Size = new System.Drawing.Size(133, 20);
             this.tensanpham.TabIndex = 50;
             // 
+            // soluong
+            // 
+            this.soluong.Location = new System.Drawing.Point(638, 106);
+            this.soluong.Name = "soluong";
+            this.soluong.Size = new System.Drawing.Size(133, 20);
+            this.soluong.TabIndex = 51;
+            this.soluong.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            this.soluong.Click += new System.EventHandler(this.soluong_Click);
+            // 
+            // btnxoa
+            // 
+            this.btnxoa.IconChar = FontAwesome.Sharp.IconChar.None;
+            this.btnxoa.IconColor = System.Drawing.Color.Black;
+            this.btnxoa.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnxoa.IconSize = 20;
+            this.btnxoa.Location = new System.Drawing.Point(694, 271);
+            this.btnxoa.Name = "btnxoa";
+            this.btnxoa.Size = new System.Drawing.Size(77, 55);
+            this.btnxoa.TabIndex = 52;
+            this.btnxoa.Text = "Xóa";
+            this.btnxoa.UseVisualStyleBackColor = true;
+            this.btnxoa.Click += new System.EventHandler(this.btnxoa_Click_1);
+            // 
             // BanHang
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(924, 491);
+            this.Controls.Add(this.btnxoa);
+            this.Controls.Add(this.soluong);
             this.Controls.Add(this.tensanpham);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.chb_combo);
-            this.Controls.Add(this.cbc_employee);
+            this.Controls.Add(this.cbc_kh);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label13);
@@ -396,16 +353,11 @@
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnexit);
-            this.Controls.Add(this.btnhuyHD);
             this.Controls.Add(this.btnthanhtoan);
-            this.Controls.Add(this.btnsua);
             this.Controls.Add(this.btnthem);
-            this.Controls.Add(this.btnxoa);
             this.Controls.Add(this.btntim);
             this.Controls.Add(this.txttiensp);
             this.Controls.Add(this.txtdongiasp);
-            this.Controls.Add(this.txtsoluongsp);
             this.Controls.Add(this.txtmasp);
             this.Controls.Add(this.txttongcongtiensp);
             this.Controls.Add(this.dataGridView1);
@@ -413,6 +365,7 @@
             this.Text = "Bán hàng";
             this.Load += new System.EventHandler(this.BanHang_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.soluong)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -421,16 +374,11 @@
         #endregion
         private System.Windows.Forms.TextBox txttongcongtiensp;
         private System.Windows.Forms.TextBox txtmasp;
-        private System.Windows.Forms.TextBox txtsoluongsp;
         private System.Windows.Forms.TextBox txtdongiasp;
         private System.Windows.Forms.TextBox txttiensp;
         private FontAwesome.Sharp.IconButton btntim;
-        private FontAwesome.Sharp.IconButton btnxoa;
         private FontAwesome.Sharp.IconButton btnthem;
-        private FontAwesome.Sharp.IconButton btnsua;
         private FontAwesome.Sharp.IconButton btnthanhtoan;
-        private FontAwesome.Sharp.IconButton btnhuyHD;
-        private FontAwesome.Sharp.IconButton btnexit;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label9;
@@ -445,10 +393,12 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn loaisp;
 		private System.Windows.Forms.DataGridViewTextBoxColumn soluongsp;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dongiasp;
-        private System.Windows.Forms.ComboBox cbc_employee;
+        private System.Windows.Forms.ComboBox cbc_kh;
         private System.Windows.Forms.CheckBox chb_combo;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tensanpham;
+        private System.Windows.Forms.NumericUpDown soluong;
+        private FontAwesome.Sharp.IconButton btnxoa;
     }
 }

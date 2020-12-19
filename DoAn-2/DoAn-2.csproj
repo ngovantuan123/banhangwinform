@@ -163,6 +163,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\AccountBLL.cs" />
     <Compile Include="ClassKetnoi.cs" />
     <Compile Include="DAL\CatalogDAO.cs" />
     <Compile Include="DAL\ComboDAO.cs" />
